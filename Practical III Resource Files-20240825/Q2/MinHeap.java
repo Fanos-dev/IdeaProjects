@@ -52,15 +52,13 @@ public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
 
             int maxIndex = leftChildIndex;
             if (rightChildIndex < list.size()) {
-                if (c.compare(list.get(maxIndex),
-                        list.get(rightChildIndex)) < 0) {
+                if (list.get(maxIndex).compareTo(list.get(rightChildIndex)) < 0) {
                     maxIndex = rightChildIndex;
                 }
             }
 
             // Swap if the current node is less than the maximum
-            if (c.compare(list.get(currentIndex),
-                    list.get(maxIndex)) < 0) {
+            if (list.get(currentIndex).compareTo(list.get(maxIndex)) < 0) {
                 E temp = list.get(maxIndex);
                 list.set(maxIndex, list.get(currentIndex));
                 list.set(currentIndex, temp);
