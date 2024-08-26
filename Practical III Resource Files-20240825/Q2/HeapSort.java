@@ -4,9 +4,16 @@ import java.util.List;
 public class HeapSort {
     /** Heap sort method that sorts elements in a given list */
     public static <E extends Comparable<E>> void heapSort(List<E> list) {
-   
-		//Add your code here
-   
+        // Create a Heap of integers
+        MinHeap<E> heap = new MinHeap<>();
+
+        // Add elements to the heap
+        for (int i = 0; i < list.size(); i++)
+            heap.add(list.get(i));
+
+        // Remove elements from the heap
+        for (int i = 0; i < list.size(); i++)
+            list.set(i, heap.remove());
     }
 
     /** A test method */
