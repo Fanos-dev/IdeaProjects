@@ -2,7 +2,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
-    private java.util.ArrayList<E> list = new java.util.ArrayList<E>();
+    private java.util.ArrayList<E> list = new java.util.ArrayList<>();
 
     /** Create a default min-heap */
     public MinHeap() {
@@ -81,6 +81,7 @@ public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
     public int getSize() {
         return list.size();
     }
+
     public boolean isEmpty(){
         return list.isEmpty();
     }
@@ -102,8 +103,5 @@ public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
             }
             return list.get(currentIndex - 1);
         }
-
-        //Add your code for a HeapIterator that implemenents the hasNext() and the next() methods
-
     }
 }
