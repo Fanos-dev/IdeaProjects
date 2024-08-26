@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class TestPriorityQueue {
     public static void main(String[] args) {
 		/*Please note that priority is defined in the ranking order. Thus, 
@@ -13,13 +16,14 @@ public class TestPriorityQueue {
         priorityQueue.enqueue(new Patient("Londiwe", 4));
         priorityQueue.enqueue(new Patient("Musa", 2));
 
-        System.out.println("The patient with the highest priority is: "+priorityQueue.peek());
+        System.out.println("The patient with the highest priority is: " + priorityQueue.peek());
 
-        System.out.println("Elements in the underlying container: "+priorityQueue.listElements());
+        System.out.println("Elements in the underlying container: " + priorityQueue.listElements());
 
         System.out.print("Elements in priority order: ");
-        while (priorityQueue.getSize() > 0)
+        while (priorityQueue.getSize() > 0){
             System.out.print(priorityQueue.dequeue() + " ");
+        }
     }
 
 }

@@ -1,4 +1,6 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
     private java.util.ArrayList<E> list = new java.util.ArrayList<E>();
 
@@ -57,7 +59,7 @@ public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
                 }
             }
 
-            // Swap if the current node is less than the maximum
+            // Swap if the current node is greater than the maximum
             if (list.get(currentIndex).compareTo(list.get(maxIndex)) > 0) {
                 E temp = list.get(maxIndex);
                 list.set(maxIndex, list.get(currentIndex));
@@ -83,14 +85,22 @@ public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
         return list.isEmpty();
     }
     private class HeapIterator implements Iterator<E> {
+        private int currentIndex = 0;
         @Override
         public boolean hasNext() {
+            while(currentIndex < list.size()){
+                currentIndex++;
+                return true;
+            }
             return false;
         }
 
         @Override
         public E next() {
-            return null;
+            if (currentIndex > list.size()){
+                throw new NoSuchElementException();
+            }
+            return list.get(currentIndex - 1);
         }
 
         //Add your code for a HeapIterator that implemenents the hasNext() and the next() methods
