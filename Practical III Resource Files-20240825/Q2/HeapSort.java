@@ -8,17 +8,19 @@ public class HeapSort {
         MinHeap<E> heap = new MinHeap<>();
 
         // Add elements to the heap
-        for (int i = 0; i < list.size(); i++)
-            heap.add(list.get(i));
+        for (E element : list) {
+            heap.add(element);
+        }
 
         // Remove elements from the heap
-        for (int i = 0; i < list.size(); i++)
+        for (int i = 0; i < list.size(); i++) {
             list.set(i, heap.remove());
+        }
     }
 
     /** A test method */
     public static void main(String[] args) {
-        ArrayList<Patient> list = new ArrayList<Patient>();
+        ArrayList<Patient> list = new ArrayList<>();
         list.add(new Patient("John", 8));
         list.add(new Patient("Jim", 1));
         list.add(new Patient("Tim", 5));
@@ -29,8 +31,9 @@ public class HeapSort {
         list.add(new Patient("Musa", 2));
 
         heapSort(list);
-		
-        for (int i = 0; i < list.size(); i++)
-            System.out.print(list.get(i) + " ");
+
+        for (Patient patient : list) {
+            System.out.print(patient + " ");
+        }
     }
 }

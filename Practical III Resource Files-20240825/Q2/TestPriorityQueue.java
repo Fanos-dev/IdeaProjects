@@ -4,7 +4,7 @@ import java.util.Iterator;
 public class TestPriorityQueue {
     public static void main(String[] args) {
 		/*Please note that priority is defined in the ranking order. Thus, 
-		a patient with the highest priority has prority value of 1.
+		a patient with the highest priority has priority value of 1.
 		*/
         PriorityQueue<Patient> priorityQueue = new PriorityQueue<Patient>();
         priorityQueue.enqueue(new Patient("John", 8));

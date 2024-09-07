@@ -30,7 +30,7 @@ public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
                 list.set(currentIndex, list.get(parentIndex));
                 list.set(parentIndex, temp);
             } else {
-                break;
+                break; //The tree is a heap
             }
             currentIndex = parentIndex;
         }
@@ -38,38 +38,43 @@ public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
 
     /** Remove the root from the heap */
     public E remove() {
-        if (list.isEmpty()) return null;
+        if (list.isEmpty()) {
+            return null;
+        }
 
+        // Root element removed, move last element to root, remove last element
         E removedObject = list.get(0);
         list.set(0, list.get(list.size() - 1));
         list.remove(list.size() - 1);
 
         int currentIndex = 0;
         while (currentIndex < list.size()) {
+            // Children
             int leftChildIndex = 2 * currentIndex + 1;
             int rightChildIndex = 2 * currentIndex + 2;
 
-            // Find the min between two children
-            if (leftChildIndex >= list.size()) break; // The tree is a heap
+            // Find the min between the two children
+            if (leftChildIndex >= list.size()) {
+                break; // The tree is a heap
+            }
 
-            int maxIndex = leftChildIndex;
+            int minIndex = leftChildIndex;
             if (rightChildIndex < list.size()) {
-                if (list.get(maxIndex).compareTo(list.get(rightChildIndex)) > 0) {
-                    maxIndex = rightChildIndex;
+                if (list.get(minIndex).compareTo(list.get(rightChildIndex)) > 0) {
+                    minIndex = rightChildIndex;
                 }
             }
 
             // Swap if the current node is greater than the maximum
-            if (list.get(currentIndex).compareTo(list.get(maxIndex)) > 0) {
-                E temp = list.get(maxIndex);
-                list.set(maxIndex, list.get(currentIndex));
+            if (list.get(currentIndex).compareTo(list.get(minIndex)) > 0) {
+                E temp = list.get(minIndex);
+                list.set(minIndex, list.get(currentIndex));
                 list.set(currentIndex, temp);
-                currentIndex = maxIndex;
+                currentIndex = minIndex;
             }
             else
                 break; // The tree is a heap
         }
-
         return removedObject;
     }
     /** get a queue iterator */
@@ -86,22 +91,19 @@ public class MinHeap<E extends Comparable<E>>  implements Iterable<E>{
         return list.isEmpty();
     }
     private class HeapIterator implements Iterator<E> {
+        //Add your code for a HeapIterator that implements the hasNext() and the next() methods
         private int currentIndex = 0;
         @Override
         public boolean hasNext() {
-            while(currentIndex < list.size()){
-                currentIndex++;
-                return true;
-            }
-            return false;
+            return currentIndex < list.size();
         }
 
         @Override
         public E next() {
-            if (currentIndex > list.size()){
+            if (!hasNext()){
                 throw new NoSuchElementException();
             }
-            return list.get(currentIndex - 1);
+            return list.get(currentIndex++);
         }
     }
 }
