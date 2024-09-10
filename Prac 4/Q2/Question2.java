@@ -6,11 +6,14 @@ import java.util.Stack;
 
 public class Question2 {
     public static void main(String[] args) {
-        Stack<String> stack = new Stack<>();
-        
-        Scanner input = null;
+        Stack<Character> stack = new Stack<>();
+
+        Scanner input = new Scanner(System.in);
         try {
-            File file = new File("Test.java");
+            // The filename is Test.java
+            System.out.print("Please enter a file name: ");
+            String fileName = input.nextLine();
+            File file = new File(fileName);
             input = new Scanner(file);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -20,7 +23,8 @@ public class Question2 {
         while (input.hasNextLine()) {
             str += input.nextLine();
         }
-        String current = "";
+
+        char current = ' ';
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
 
@@ -29,23 +33,22 @@ public class Question2 {
             }
 
             if (ch == '(' || ch == '{' || ch == '[' || ch == ')' || ch == '}' || ch == ']') {
-                if (current.equals("(") && ch == ')') {
+                if (current == '(' && ch == ')') {
                     stack.pop();
-                } else if (current.equals("{") && ch == '}') {
+                } else if (current == '{' && ch == '}') {
                     stack.pop();
-                } else if (current.equals("[") && ch == ']') {
+                } else if (current == '[' && ch == ']') {
                     stack.pop();
                 } else {
-                    stack.push(String.valueOf(ch));
-
+                    stack.push(ch);
                 }
             }
         }
 
         if (stack.isEmpty()) {
-            System.out.println("Works");
+            System.out.println("The program has the correct pairs of grouping symbols");
         } else {
-            System.out.println("Not Works");
+            System.out.println("ERROR: The program does not have the correct pairs of grouping symbols");
         }
     }
 }
