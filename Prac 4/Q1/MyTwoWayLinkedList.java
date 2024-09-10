@@ -322,7 +322,6 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
             }
             DLLNode<E> temp = current;
             current = current.next;
-            index++;
             return temp.element;
         }
         @Override
@@ -337,7 +336,6 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
             }
             DLLNode<E> temp = current;
             current = current.previous;
-            index++;
             return temp.element;
         }
 
