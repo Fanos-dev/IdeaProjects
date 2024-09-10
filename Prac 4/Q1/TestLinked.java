@@ -1,3 +1,5 @@
+import java.util.ListIterator;
+
 public class TestLinked {
     public static void main(String[] args) {
         MyTwoWayLinkedList<Integer> list = new MyTwoWayLinkedList();
@@ -7,7 +9,12 @@ public class TestLinked {
 
         list.add(0,4);
         list.add(1,5);
-        list.removeLast();
         System.out.println(list);
+
+        ListIterator<Integer> l = list.listIterator();
+        while (l.hasNext()) {
+            System.out.print(l.next() + " ");
+        }
+        //list.traverseBackwards();
     }
 }

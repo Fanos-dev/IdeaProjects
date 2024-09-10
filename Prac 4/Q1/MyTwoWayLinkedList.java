@@ -1,5 +1,6 @@
 import java.util.AbstractSequentialList;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
     private DLLNode<E> head, tail;
@@ -152,10 +153,14 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
         } else {
             DLLNode<E> current = head;
             for (int i = 0 ; i < index; i++) {
-
+                current = current.next;
             }
+            DLLNode<E> temp = current;
+            current.previous.next = current.next;
+            current.next.previous = current.previous;
+            size--;
+            return temp.element;
         }
-        return null; // replace this with the correct return statement
     }
 
     @Override
@@ -306,32 +311,34 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
         }
         @Override
         public boolean hasNext() {
-            
 			//Add your code here;
-			
-			return false; // replace this with the correct return statement
+			return current != null;
         }
         @Override
         public E next() {
-			
             //add your code here
-            
-			return null; // replace this with the correct return statement
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            DLLNode<E> temp = current;
+            current = current.next;
+            index++;
+            return temp.element;
         }
         @Override
         public boolean hasPrevious() {
-            
 			//add your code here
-			
-			return false;// replace this with the correct return statement
+			return current != null;
         }
         @Override
         public E previous() {
-            
-			
-			//add your code here
-			
-            return null; // replace this with the correct return statement
+            if(!hasPrevious()){
+                throw new NoSuchElementException();
+            }
+            DLLNode<E> temp = current;
+            current = current.previous;
+            index++;
+            return temp.element;
         }
 
         public void remove() {
