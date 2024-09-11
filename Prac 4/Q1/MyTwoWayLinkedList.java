@@ -45,7 +45,7 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
         } else {
             DLLNode<E> newNode = new DLLNode<>(e, head, null);
             head = newNode;
-            newNode.next.previous = newNode;
+            head.next.previous = newNode;
         }
         size++;
     }
@@ -85,7 +85,9 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
             for (int i = 0; i < index - 1; i++) {
                 current = current.next;
             }
+            // Add the new node at the index and maintain link
             current.next = new DLLNode<>(e, current.next, current);
+            // Set the newNode, next nodes previous to the newNode
             current.next.next.previous = current.next;
             size++;
         }
