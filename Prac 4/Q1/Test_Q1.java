@@ -37,8 +37,6 @@ public class Test_Q1 {
     " current list in the reverse order with no elements skipped or added\n");
     list.traverseBackwards();//If all your methods are implemented correctly, this should return your 
                              // current list in the reverse order with no elements skipped or added.
-
-     
     }
 }
 

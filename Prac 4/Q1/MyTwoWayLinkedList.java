@@ -1,5 +1,6 @@
 import java.util.AbstractSequentialList;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
     private DLLNode<E> head, tail;
@@ -38,14 +39,31 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
     /** Add an element to the beginning of the list */
     public void addFirst(E e) {
         //add your code here
-        DLLNode<E> newNode = new DLLNode<>(e, null, null);
+        if (tail == null){
+            head = new DLLNode<>(e, null, null);
+            tail = head;
+        } else {
+            DLLNode<E> newNode = new DLLNode<>(e, head, null);
+            head = newNode;
+            head.next.previous = newNode;
+        }
+        size++;
     }
 
     /** Add an element to the end of the list */
     public void addLast(E e) {
-        
-		//add your code here
-
+        //add your code here
+        if(tail == null){
+            DLLNode<E> newNode = new DLLNode<>(e, null, null);
+            head = newNode;
+            tail = head;
+            newNode.previous = newNode;
+        } else {
+            DLLNode<E> newNode = new DLLNode<>(e, null, tail);
+            tail = newNode;
+            tail.previous.next = newNode;
+        }
+        size++;
     }
 
     /**
@@ -53,9 +71,26 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
      * head element is 0
      */
     public void add(int index, E e) {
-		
         //Add your code here
-        
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (index == 0){
+            addFirst(e);
+        } else if (index == size) {
+            addLast(e);
+        } else {
+            DLLNode<E> current = head;
+            for (int i = 0; i < index - 1; i++) {
+                current = current.next;
+            }
+            // Add the new node at the index and maintain link
+            current.next = new DLLNode<>(e, current.next, current);
+            // Set the newNode, next nodes previous to the newNode
+            current.next.next.previous = current.next;
+            size++;
+        }
     }
 
     /**
@@ -63,10 +98,21 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
      * removed node.
      */
     public E removeFirst() {
-        
-		//Add your code here. 
-  
-        return null; // replace this with the correct return statement
+		//Add your code here.
+        if (size == 0) {
+            return null;
+        } else if (size == 1) {
+            DLLNode<E> temp = head;
+            head = tail = null;
+            size = 0;
+            return temp.element;
+        } else{
+            DLLNode<E> temp = head;
+            head = head.next;
+            head.previous = null;
+            size--;
+            return temp.element;
+        }
     }
 
     /**
@@ -97,10 +143,26 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
      * element that was removed from the list.
      */
     public E remove(int index) {
-        
 		//add code here. Remember to take care of the return null statement below
- 
-        return null; // replace this with the correct return statement
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (index == 0) {
+            return removeFirst();
+        } else if (index == size - 1) {
+            return removeLast();
+        } else {
+            DLLNode<E> current = head;
+            for (int i = 0 ; i < index; i++) {
+                current = current.next;
+            }
+            DLLNode<E> temp = current;
+            current.previous.next = current.next;
+            current.next.previous = current.previous;
+            size--;
+            return temp.element;
+        }
     }
 
     @Override
@@ -251,32 +313,32 @@ public class MyTwoWayLinkedList<E> extends AbstractSequentialList<E>{
         }
         @Override
         public boolean hasNext() {
-            
 			//Add your code here;
-			
-			return false; // replace this with the correct return statement
+			return current != null;
         }
         @Override
         public E next() {
-			
             //add your code here
-            
-			return null; // replace this with the correct return statement
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            DLLNode<E> temp = current;
+            current = current.next;
+            return temp.element;
         }
         @Override
         public boolean hasPrevious() {
-            
 			//add your code here
-			
-			return false;// replace this with the correct return statement
+			return current != null;
         }
         @Override
         public E previous() {
-            
-			
-			//add your code here
-			
-            return null; // replace this with the correct return statement
+            if(!hasPrevious()){
+                throw new NoSuchElementException();
+            }
+            DLLNode<E> temp = current;
+            current = current.previous;
+            return temp.element;
         }
 
         public void remove() {
