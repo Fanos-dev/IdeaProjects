@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class BST<E> implements Tree<E> {
     protected TreeNode<E> root;
     protected int size = 0;
@@ -20,7 +22,7 @@ public class BST<E> implements Tree<E> {
             add(objects[i]);
     }
 
-    @Override /** Returns true if the element is in the tree */
+    @Override /* Returns true if the element is in the tree */
     public boolean search(E e) {
         TreeNode<E> current = root; // Start from the root
 
@@ -38,8 +40,8 @@ public class BST<E> implements Tree<E> {
         return false;
     }
 
-    @Override /** Insert element e into the binary tree
-     * Return true if the element is inserted successfully */
+    @Override /* Insert element e into the binary tree
+      Return true if the element is inserted successfully */
     public boolean insert(E e) {
         if (root == null)
             root = createNewNode(e); // Create a new root
@@ -74,7 +76,7 @@ public class BST<E> implements Tree<E> {
         return new TreeNode<>(e, null, null);
     }
 
-    @Override /** Inorder traversal from the root */
+    @Override /* Inorder traversal from the root */
     public void inorder() {
         inorder(root);
     }
@@ -87,7 +89,7 @@ public class BST<E> implements Tree<E> {
         inorder(root.right);
     }
 
-    @Override /** Postorder traversal from the root */
+    @Override /* Postorder traversal from the root */
     public void postorder() {
         postorder(root);
     }
@@ -100,7 +102,7 @@ public class BST<E> implements Tree<E> {
         System.out.print(root.element + " ");
     }
 
-    @Override /** Preorder traversal from the root */
+    @Override /* Preorder traversal from the root */
     public void preorder() {
         preorder(root);
     }
@@ -131,7 +133,7 @@ public class BST<E> implements Tree<E> {
         }
     }
 
-    @Override /** Get the number of nodes in the tree */
+    @Override /* Get the number of nodes in the tree */
     public int getSize() {
         return size;
     }
@@ -162,10 +164,10 @@ public class BST<E> implements Tree<E> {
         return list; // Return an array list of nodes
     }
 
-    @Override /** Delete an element from the binary tree
-	 * using the deletion by copying approach
-     * Return true if the element is deleted successfully
-     * Return false if the element is not in the tree */
+    @Override /* Delete an element from the binary tree
+	  using the deletion by copying approach
+      Return true if the element is deleted successfully
+      Return false if the element is not in the tree */
     public boolean delete(E e) {
         // Locate the node to be deleted and also locate its parent node
         TreeNode<E> parent = null;
@@ -226,48 +228,150 @@ public class BST<E> implements Tree<E> {
         return true; // Element deleted successfully
     }
 
-    @Override /** Obtain an iterator. Use inorder. */
+    @Override /* Obtain an iterator. Use inorder. */
     public java.util.Iterator<E> iterator() {
         return new InorderIterator();
     }
 	
 	/** Delete an element from the binary tree
-	 * using the deletion by copying approach
+	 * using the deletion by merging approach
      * Return true if the element is deleted successfully
      * Return false if the element is not in the tree */
-    public boolean deleteByMerging(E e){
-		
+    public boolean deleteByMerging(E e) {
         // add your code here
-        
+        TreeNode<E> parent = null;
+        TreeNode<E> current = root;
+
+        // Find element to delete
+        while (current != null) {
+            if (c.compare(e, current.element) < 0) {
+                parent = current;
+                current = current.left;
+            } else if (c.compare(e, current.element) > 0) {
+                parent = current;
+                current = current.right;
+            } else {
+                break; // Element is in the tree pointed at by current
+            }
+        }
+
+        // Element is not in the tree
+        if (current == null) {
+            return false;
+        }
+
+        if (current.left == null) {
+            // Connect the parent with the right child of the current node
+            if (parent == null) {
+                root = current.right;
+            }
+            else {
+                if (c.compare(e, parent.element) < 0)
+                    parent.left = current.right;
+                else
+                    parent.right = current.right;
+            }
+        }
+        else {
+            //Find rightmost in left subtree
+            TreeNode<E> rightMost = current.left;
+
+            while (rightMost.right != null) {
+                rightMost = rightMost.right; // Keep going to the right
+            }
+
+            //Link rightmost with right subtree
+            rightMost.right = current.right;
+            current.right = null;
+
+            //Delete the node
+            if (parent == null){
+                root = current.left;
+            } else {
+                if (parent.left == current) {
+                    parent.left = current.left;
+                } else if (parent.right == current) {
+                    parent.right = current.left;
+                }
+            }
+        }
+
+        size--;
         return true;
     }
+
 	
 	/** uses a loop to traverse a BST in a post-order fashion
 	* Hint: You need an explicit stack in your code to 
 	* implement this method*/
 
     public  void iterativePostorder() {
-        
 		// Add your code here
- 
+        if (root == null) {
+            return;
+        }
+        Stack<TreeNode<E>> firstStack = new Stack<>();
+        Stack<TreeNode<E>> secondStack = new Stack<>();
+
+        firstStack.push(root);
+
+        while (!firstStack.isEmpty()) {
+            //Pop top node from first stack and push  to second stack
+            TreeNode<E> temp = firstStack.pop();
+            secondStack.push(temp);
+
+            if (temp.left != null) {
+                firstStack.push(temp.left);
+            }
+            if (temp.right != null) {
+                firstStack.push(temp.right);
+            }
+        }
+
+        //Pop all elements of second stack
+        while (!secondStack.isEmpty()) {
+            TreeNode<E> temp = secondStack.pop();
+            System.out.print(temp.element + " ");
+        }
     }
 	
 	/** Returns the height of this binary tree, i.e., the 
 	* number of the nodes in the longest path of the root to a leaf
 	* NB:- this is best implemented as a recursive algorithm */
 
-    public int getHeight(){    
-		
-		// Add your code here
-		
-		return null; // you may to chenge what is returned here
+    public int getHeight(){
+		return height(root); // you may change what is returned here
+    }
+
+    public int height(TreeNode<E> node){
+        if(node == null){
+            return 0;
+        }
+        //Recursive function to get heights for the left and right
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+
+        if (node == root){
+            return Math.max(leftHeight, rightHeight);
+        }
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 
 	/*creates a mirror image of the original binary tree. */ 
-    public void mirrorOf(){
-		
-        // add your code here
-		
+    public void mirrorOf(TreeNode<E> node){
+        //Swap the left and right
+        if (node != null) {
+            mirrorOf(node.left);
+            mirrorOf(node.right);
+
+            TreeNode<E> temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+        }
+    }
+
+    public void convertToMirrorImage(){
+        mirrorOf(root);
     }
 
     // Inner class InorderIterator
@@ -294,7 +398,7 @@ public class BST<E> implements Tree<E> {
             inorder(root.right);
         }
 
-        @Override /** More elements for traversing? */
+        @Override /* More elements for traversing? */
         public boolean hasNext() {
             if (current < list.size())
                 return true;
@@ -302,7 +406,7 @@ public class BST<E> implements Tree<E> {
             return false;
         }
 
-        @Override /** Get the current element and move to the next */
+        @Override /* Get the current element and move to the next */
         public E next() {
             return list.get(current++);
         }
@@ -318,7 +422,7 @@ public class BST<E> implements Tree<E> {
         }
     }
 
-    @Override /** Remove all elements from the tree */
+    @Override /* Remove all elements from the tree */
     public void clear() {
         root = null;
         size = 0;

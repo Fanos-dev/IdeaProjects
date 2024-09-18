@@ -33,19 +33,19 @@ public class Test_Q1 {
         Integer[] numbers = {2, 4, 3, 1, 8, 5, 6, 7};
         BST<Integer> intTree = new BST<>(numbers);
         intTree.deleteByMerging(5);
-        System.out.println("Inorder (sorted) after deleting 5: ");
+        System.out.println("\nInorder (sorted) after deleting 5: ");
         intTree.inorder();
 
-        System.out.println("\nThe height of the tree is: "+intTree.getHeight());
+        System.out.println("\nThe height of the tree is: " + intTree.getHeight());
 
-        System.out.println("\nInorder after converting the tree to its mirror image: ");
-        intTree.convertToMirrorImage();
-        intTree.inorder();
-
-        System.out.println("\n\nRecursive post order: ");
+        System.out.println("\nRecursive post order: ");
         intTree.postorder();
 
         System.out.println("\nIterative post order: ");
         intTree.iterativePostorder();
+
+        System.out.println("\n\nInorder after converting the tree to its mirror image: ");
+        intTree.convertToMirrorImage();
+        intTree.inorder();
     }
 }
