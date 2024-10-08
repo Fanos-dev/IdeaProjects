@@ -20,12 +20,10 @@ public class Practical_VI_Q2 {
 		      {11, 8}, {11, 9}, {11, 10}, {12, 13}, {13, 12}
 		    };
 
-	    MyGraph<String> graph = 
-	      new MyGraph<String>(edges, vertices);
-	    AbstractGraph<String>.Tree dfs = 
-	      graph.dfs(graph.getIndex("Chicago")); 
-	    
-	    System.out.println(graph.getConnectedComponents());
+	    MyGraph<String> graph = new MyGraph<>(edges, vertices);
+	    AbstractGraph<String>.Tree dfs = graph.dfs(graph.getIndex("Chicago"));
+
+	    //System.out.println(graph.getConnectedComponents());
 	  }		  
 	 
 	}
