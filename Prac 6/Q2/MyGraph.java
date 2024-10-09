@@ -46,7 +46,7 @@ public class MyGraph<V> extends UnweightedGraph<V> {
 
 			  for (int m : neighbors.get(v)) {
 				  if (!visited[m]) {
-					  	getConnectedComponent(m, visited, list);
+					  getConnectedComponent(m, visited, list);
 				  }
 			  }
 			  return list;
