@@ -9,7 +9,7 @@ public class WordLadderModel {
         this.words = words;
 
         UnweightedGraph<Integer> graph = new UnweightedGraph<>(getEdges(), words.size());
-        tree = graph.dfs(words.indexOf(beginWord));
+        tree = graph.bfs(words.indexOf(beginWord));
     }
     public AbstractGraph<Integer>.Tree getTree(){
         return tree;
