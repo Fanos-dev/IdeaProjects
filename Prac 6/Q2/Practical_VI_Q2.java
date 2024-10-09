@@ -4,7 +4,7 @@ public class Practical_VI_Q2 {
 		String[] vertices = {"Seattle", "San Francisco", "Los Angeles",
 		  "Denver", "Kansas City", "Chicago", "Boston", "New York",
 		  "Atlanta", "Miami", "Dallas", "Houston", "Savannah", "Charlston"};
-		    
+
 	    int[][] edges = {
 		      {0, 1}, {0, 3}, {0, 5},
 		      {1, 0}, {1, 2}, {1, 3},
@@ -23,7 +23,7 @@ public class Practical_VI_Q2 {
 	    MyGraph<String> graph = new MyGraph<>(edges, vertices);
 	    AbstractGraph<String>.Tree dfs = graph.dfs(graph.getIndex("Chicago"));
 
-	    //System.out.println(graph.getConnectedComponents());
+	    System.out.println(graph.getConnectedComponents());
 	  }		  
 	 
 	}

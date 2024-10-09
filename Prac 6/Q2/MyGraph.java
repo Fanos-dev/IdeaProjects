@@ -25,12 +25,30 @@ public class MyGraph<V> extends UnweightedGraph<V> {
 		  public MyGraph(int[][] edges, int numberOfVertices) {
 		    super(edges, numberOfVertices);
 		  }
-		  
+
 		public List<List<Integer>> getConnectedComponents() {
 		  List<List<Integer>> list = new ArrayList<List<Integer>>();
 
+		  boolean[] visited = new boolean[vertices.size()];
 		  //Add your code here
-		  
+		  for (int v = 0; v < getSize(); v++) {
+			  if (!visited[v]) {
+				  list.add(getConnectedComponent(v, visited, new ArrayList<>()));
+			  }
+		  }
+
 		  return list;
+		}
+
+		public List<Integer> getConnectedComponent(int v, boolean[] visited, List<Integer> list) {
+			  visited[v] = true;
+			  list.add(v);
+
+			  for (int m : neighbors.get(v)) {
+				  if (!visited[m]) {
+					  	getConnectedComponent(m, visited, list);
+				  }
+			  }
+			  return list;
 		}
 	  }
